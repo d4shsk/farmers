@@ -11,9 +11,16 @@ public class GetGrass : MonoBehaviour
     [SerializeField] private float raycastLength;
     [SerializeField] private Vector3 startPosition;
 
+    private Grass currentGrass;
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        collision.gameObject.TryGetComponent<Grass>(out currentGrass);
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.GetComponent<GrassPalce>())
+        if (collision.GetComponent<GrassPalce>())
         {
             onGrassEnter.Invoke();
         }
@@ -28,16 +35,8 @@ public class GetGrass : MonoBehaviour
     }
 
     public void CollectGrass() {
-        RaycastHit2D raycast = Physics2D.Raycast(transform.position + startPosition, Vector2.down * -raycastLength);
-        Debug.DrawRay(transform.position, Vector2.down * Vector2.down * -raycastLength);
-
-        if (raycast.collider)
-        {
-            raycast.collider.gameObject.TryGetComponent<Grass>(out Grass grass);
-            if (grass)
-            {
-                grass.CollectGrass();
-            }
+        if (currentGrass) {
+            currentGrass.CollectGrass();
         }
     }
 }
