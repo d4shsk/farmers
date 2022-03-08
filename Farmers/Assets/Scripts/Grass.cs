@@ -33,6 +33,5 @@ public class Grass : MonoBehaviour
             spriteRenderer.sprite = collectedSprite;
             grassRefill.grassEmpty = true;
         }
-        
     }
 }

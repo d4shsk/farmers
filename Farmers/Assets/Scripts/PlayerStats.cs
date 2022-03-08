@@ -7,13 +7,13 @@ using UnityEngine.Events;
 
 public class PlayerStats : MonoBehaviour
 {
-    [SerializeField] private UnityEvent<int> onMoneyChanged;
+    [SerializeField] private UnityEvent<float> onMoneyChanged;
     [SerializeField] private UnityEvent<float> onGrassAmountChanged;
     [SerializeField] private float baseGrassAddAmount;
 
     private UpgradesInventory upgradesInventory;
 
-    private int money;
+    public float money;
     private float grass;
 
     private void Start()
@@ -27,7 +27,7 @@ public class PlayerStats : MonoBehaviour
     }
 
     public void AddGrass() {
-        grass += baseGrassAddAmount * upgradesInventory.currentGrassMultiplier;
+        grass += baseGrassAddAmount * upgradesInventory.CalculateGrassMultiplier();
         onGrassAmountChanged.Invoke(grass);
     }
 }
