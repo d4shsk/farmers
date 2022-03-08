@@ -3,31 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(UpgradesInventory))]
-
 public class PlayerStats : MonoBehaviour
 {
     [SerializeField] private UnityEvent<float> onMoneyChanged;
     [SerializeField] private UnityEvent<float> onGrassAmountChanged;
-    [SerializeField] private float baseGrassAddAmount;
 
-    private UpgradesInventory upgradesInventory;
-
-    public float money;
+    private float money;
     private float grass;
 
-    private void Start()
+    public bool CheckMoneyAvailable(float amount)
     {
-        upgradesInventory = GetComponent<UpgradesInventory>();
+        if (money - amount >= 0)
+        {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
-    public void AddMoney(int amount) {
+    public void ChangeMoney(float amount) {
         money += amount;
         onMoneyChanged.Invoke(money);
     }
 
-    public void AddGrass() {
-        grass += baseGrassAddAmount * upgradesInventory.CalculateGrassMultiplier();
+    public void ChangeGrass(float amount) {
+        grass += amount;
         onGrassAmountChanged.Invoke(grass);
     }
 }

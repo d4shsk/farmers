@@ -10,8 +10,6 @@ public class Grass : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer spriteRenderer;
 
-    [SerializeField] private UnityEvent onGrassCollected;
-
     [SerializeField] private Sprite baseSprite;
     [SerializeField] private Sprite collectedSprite;
 
@@ -27,11 +25,12 @@ public class Grass : MonoBehaviour
         spriteRenderer.sprite = baseSprite;
     }
 
-    public void CollectGrass() {
-        if (!grassRefill.grassEmpty) {
-            onGrassCollected.Invoke();
-            spriteRenderer.sprite = collectedSprite;
-            grassRefill.grassEmpty = true;
-        }
+    public bool GrassCollectable() {
+        return !grassRefill.grassEmpty;
+    }
+
+    public void SetGrassEmpty() {
+        spriteRenderer.sprite = collectedSprite;
+        grassRefill.grassEmpty = true;
     }
 }

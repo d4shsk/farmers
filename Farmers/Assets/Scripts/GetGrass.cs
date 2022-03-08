@@ -3,12 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+[RequireComponent(typeof(UpgradesInventory))]
+
 public class GetGrass : MonoBehaviour
 {
+    [SerializeField] private UnityEvent<float> onGrassCollected;
     [SerializeField] private UnityEvent onGrassEnter;
     [SerializeField] private UnityEvent onGrassLeft;
 
+    [SerializeField] private float baseGrassAddAmount;
+
     private Grass currentGrass;
+    private UpgradesInventory upgradesInventory;
+
+    private void Start()
+    {
+        upgradesInventory = GetComponent<UpgradesInventory>();
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -33,7 +44,13 @@ public class GetGrass : MonoBehaviour
 
     public void CollectGrass() {
         if (currentGrass) {
-            currentGrass.CollectGrass();
+            if (currentGrass.GrassCollectable())
+            {
+                var grassToAdd = baseGrassAddAmount * upgradesInventory.CalculateGrassMultiplier();
+
+                onGrassCollected.Invoke(grassToAdd);
+                currentGrass.SetGrassEmpty();
+            }
         }
     }
 }

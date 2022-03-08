@@ -25,10 +25,10 @@ public class UpgradesInventory : MonoBehaviour
     public void TryAddUpgrade(int upgradeId)
     {
         var upgrade = availableUpgrades[upgradeId];
-        if (playerStats.money >= upgrade.cost)
+        if (playerStats.CheckMoneyAvailable(upgrade.cost))
         {
             print("upgrade bought");
-            playerStats.money -= upgrade.cost;
+            playerStats.ChangeMoney(-upgrade.cost);
             currentUpgrades.Add(upgrade);
         }
         else {
