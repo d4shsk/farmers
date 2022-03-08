@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class UpgradesInventory : MonoBehaviour
 {
+    [SerializeField] private float baseGrassMultiplier = 1;
+
     private Upgrade[] availableUpgrades =
     {
         new GrassMultiplier(20, "Grass multiplier", 2)
@@ -13,12 +15,13 @@ public class UpgradesInventory : MonoBehaviour
 
     private List<Upgrade> currentUpgrades = new List<Upgrade>();
 
-    private float currentGrassMultiplier = 1;
+    private float currentGrassMultiplier;
 
     private PlayerStats playerStats;
 
     private void Start()
     {
+        currentGrassMultiplier = baseGrassMultiplier;
         playerStats = GetComponent<PlayerStats>();
     }
 
@@ -30,17 +33,23 @@ public class UpgradesInventory : MonoBehaviour
             print("upgrade bought");
             playerStats.ChangeMoney(-upgrade.cost);
             currentUpgrades.Add(upgrade);
+            CalculateGrassMultiplier();
         }
         else {
             print("more money need");
         }
     }
 
-    public float CalculateGrassMultiplier() {
+    public void CalculateGrassMultiplier() {
+        currentGrassMultiplier = baseGrassMultiplier;
+
         foreach (GrassMultiplier grassMultiplier in currentUpgrades)
         {
             currentGrassMultiplier += grassMultiplier.multiplieRatio;
         }
+    }
+
+    public float GetGrassMultiplier() {
         return currentGrassMultiplier;
     }
 }

@@ -46,7 +46,7 @@ public class GetGrass : MonoBehaviour
         if (currentGrass) {
             if (currentGrass.GrassCollectable())
             {
-                var grassToAdd = baseGrassAddAmount * upgradesInventory.CalculateGrassMultiplier();
+                var grassToAdd = baseGrassAddAmount * upgradesInventory.GetGrassMultiplier();
 
                 onGrassCollected.Invoke(grassToAdd);
                 currentGrass.SetGrassEmpty();

@@ -8,8 +8,15 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private UnityEvent<float> onMoneyChanged;
     [SerializeField] private UnityEvent<float> onGrassAmountChanged;
 
-    private float money;
+    [SerializeField] private float money;
     private float grass;
+
+    public void ConvertGrassToMoney() {
+        money += grass;
+        grass = 0;
+        onGrassAmountChanged.Invoke(grass);
+        onMoneyChanged.Invoke(money);
+    }
 
     public bool CheckMoneyAvailable(float amount)
     {
