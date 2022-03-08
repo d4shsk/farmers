@@ -12,8 +12,8 @@ public class Grass : MonoBehaviour
 
     [SerializeField] private UnityEvent onGrassCollected;
 
-    [SerializeField] private Color baseColor;
-    [SerializeField] private Color collectedColor;
+    [SerializeField] private Sprite baseSprite;
+    [SerializeField] private Sprite collectedSprite;
 
     private GrassRefill grassRefill;
 
@@ -24,13 +24,13 @@ public class Grass : MonoBehaviour
     }
 
     public void SetBaseState() { // Ну чисто базированное состояние
-        spriteRenderer.color = baseColor;
+        spriteRenderer.sprite = baseSprite;
     }
 
     public void CollectGrass() {
         if (!grassRefill.grassEmpty) {
             onGrassCollected.Invoke();
-            spriteRenderer.color = collectedColor;
+            spriteRenderer.sprite = collectedSprite;
             grassRefill.grassEmpty = true;
         }
         

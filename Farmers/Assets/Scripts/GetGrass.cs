@@ -8,9 +8,6 @@ public class GetGrass : MonoBehaviour
     [SerializeField] private UnityEvent onGrassEnter;
     [SerializeField] private UnityEvent onGrassLeft;
 
-    [SerializeField] private float raycastLength;
-    [SerializeField] private Vector3 startPosition;
-
     private Grass currentGrass;
 
     private void OnCollisionEnter2D(Collision2D collision)
